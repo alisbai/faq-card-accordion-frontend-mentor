@@ -1,20 +1,56 @@
-const questions = document.querySelectorAll('.question');
-
-questions.forEach(question => {
-    question.addEventListener('click', function() {
-        let dropDown = question.nextElementSibling;
-        dropDown.classList.add('collapsing');
-        if(question.classList.contains('opened')) {
-            dropDown.classList.add('collapse');
-            dropDown.classList.remove('show');
+(function() {
+    const questions = document.querySelectorAll('.question');
+    let openedTab = null;
+    questions.forEach(question => {
+        question.addEventListener('click', handleQuestionClick)
+    })
+    
+    function handleQuestionClick(e) {
+        if(openedTab) {
+            closeTab(openedTab);
+            flipArrow(openedTab);
+            if(openedTab === e.target) {
+                openedTab = null;
+            }
+            else {
+                openTab(e.target);
+                flipArrow(e.target);
+                openedTab = e.target;
+            }
         }
         else {
-            dropDown.classList.add('show');
-            dropDown.classList.remove('collapse');
+            openTab(e.target);
+            flipArrow(e.target);
+            openedTab = e.target;
         }
+    }
+    
+    function openTab(question) {
+        let answer = question.nextElementSibling;
+        console.log('open this');
+        console.log(answer);
+        answer.classList.remove('collapse');
+        answer.classList.add('collapsing');
+        answer.classList.add('show');
         setTimeout(() => {
-            dropDown.classList.remove('collapsing');
+            answer.classList.remove('collapsing');
         }, 500);
-        question.classList.toggle('opened');
-    })
-})
+    }
+    
+    function closeTab(question) {
+        let answer = question.nextElementSibling;
+        console.log('close this');
+        console.log(answer);
+        answer.classList.remove('show');
+        answer.classList.add('collapsing');
+        answer.classList.add('collapse');
+        setTimeout(() => {
+            answer.classList.remove('collapsing');
+        }, 500);
+    }
+    
+    function flipArrow(question) {
+        console.log('flip arrow');
+        question.classList.toggle('flip');
+    }
+})();

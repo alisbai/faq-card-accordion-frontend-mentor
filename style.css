@@ -186,20 +186,16 @@ header {
     }
 }
 
-@keyframes down {
-    0% {
-        height: 0;
-    }
-    100% {
-        height: 35px;
-    }
+/* Animation classes */
+
+.collapse {
+	height: 0;
 }
 
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(180deg);
-    }
+.collapsing {
+	transition: 0.5s ease-in-out;
+}
+
+.show {
+	height: 50px;
 }

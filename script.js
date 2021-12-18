@@ -1,33 +1,20 @@
+const questions = document.querySelectorAll('.question');
 
-let animations = (function() {
-    let recentlyOpenedAnswer = null;
-    let questions = document.querySelectorAll('.question');
-    questions.forEach(question => question.addEventListener('click', decideToOpenQuestion));
-    // This function decides whether to open a question or not.
-    function decideToOpenQuestion(e) {
-        if(e.target === recentlyOpenedAnswer) {
-            closeAnswer(recentlyOpenedAnswer);
-            recentlyOpenedAnswer = null;
-        }
-        else if(recentlyOpenedAnswer) {
-            closeAnswer(recentlyOpenedAnswer);
-            openAnswer(e);
-            recentlyOpenedAnswer = e.target;
+questions.forEach(question => {
+    question.addEventListener('click', function() {
+        let dropDown = question.nextElementSibling;
+        dropDown.classList.add('collapsing');
+        if(question.classList.contains('opened')) {
+            dropDown.classList.add('collapse');
+            dropDown.classList.remove('show');
         }
         else {
-            openAnswer(e);
-            recentlyOpenedAnswer = e.target;
+            dropDown.classList.add('show');
+            dropDown.classList.remove('collapse');
         }
-    }
-    //this function opens the question the was clicked
-    function openAnswer(e) {
-        const accordion = e.target.nextElementSibling;
-        accordion.style.height = "auto";
-    }
-    // this function closes the specified accordion
-    function closeAnswer(question) {
-        const accordion = question.nextElementSibling;
-        accordion.style.height = "0";
-
-    }
-})();
+        setTimeout(() => {
+            dropDown.classList.remove('collapsing');
+        }, 500);
+        question.classList.toggle('opened');
+    })
+})
